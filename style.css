@@ -1,0 +1,169 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  align-content: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  font-size: 0.875rem;
+}
+
+.grid {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 3rem;
+}
+
+.container {
+  justify-items: center;
+}
+
+.controls {
+  grid-template-columns: 1fr 1fr;
+  gap: 1em;
+}
+
+button {
+  --button-color: teal;
+  font: inherit;
+  padding: 0.5em 1em;
+  border: 2px solid white;
+  cursor: pointer;
+  background-color: var(--button-color);
+  border-radius: 0.25rem;
+  color: white;
+
+  &:is(:hover, :focus-visible) {
+    opacity: 0.8;
+  }
+
+  &:active {
+    border: 2px solid var(--button-color);
+    color: var(--button-color);
+    background-color: white;
+  }
+}
+
+#analogClock {
+  --clockSize: 10rem;
+  --clockColor: lch(60% 120 60 / 1);
+  /* font-size: 1rem; */
+  color: var(--clockColor);
+  position: relative;
+  height: var(--clockSize);
+  width: var(--clockSize);
+  border: 0.15em solid var(--clockColor);
+  border-radius: 50%;
+  background-size: 100%;
+  cursor: pointer;
+  justify-items: center;
+  overflow: hidden;
+}
+
+#analogClock>* {
+  position: absolute;
+  background: var(--clockColor);
+  transform-origin: bottom;
+}
+
+[class*="hand"] {
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  width: var(--h-hand-width);
+  height: var(--h-hand-height);
+  top: calc(50% - var(--h-hand-height));
+  left: calc(50% - var(--h-hand-width) / 2);
+}
+
+.hour-hand {
+  --h-hand-width: 2%;
+  --h-hand-height: 25%;
+  opacity: 0.9;
+}
+
+.minute-hand {
+  --h-hand-width: 2%;
+  --h-hand-height: 40%;
+  opacity: 0.6;
+}
+
+.second-hand {
+  --h-hand-width: 1%;
+  --h-hand-height: 40%;
+  opacity: 0.3;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+.circle {
+  --circleSize: 4%;
+  width: var(--circleSize);
+  height: var(--circleSize);
+  top: calc(50% - var(--circleSize) / 2);
+  border-radius: 50%;
+}
+
+#analogClock .group {
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  width: 0;
+  height: 100%;
+  font-weight: 400;
+  font-size: 120%;
+  transform-origin: center;
+
+  --short-mark-width: .1em;
+  --short-mark-height: .25em;
+  --long-mark-width: .1em;
+  --long-mark-height: .4em;
+
+  &:nth-child(5n+1)::before {
+    width: var(--long-mark-width);
+    height: var(--long-mark-height);
+  }
+
+  &:nth-child(5n+1)::after {
+    width: var(--long-mark-width);
+    height: var(--long-mark-height);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    width: var(--short-mark-width);
+    height: var(--short-mark-height);
+    background-color: var(--clockColor);
+    top: 1%;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: var(--short-mark-width);
+    height: var(--short-mark-height);
+    background-color: var(--clockColor);
+    bottom: 1%;
+  }
+}
+
+.group>* {
+  position: absolute;
+
+  &:first-child {
+    top: 5%;
+  }
+
+  &:last-child {
+    bottom: 5%;
+  }
+}
