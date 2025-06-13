@@ -9,32 +9,35 @@ body {
   min-height: 100vh;
   display: grid;
   align-content: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: system-ui, sans-serif;
   text-align: center;
   font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 2;
 }
 
 .grid {
   display: grid;
-  justify-content: center;
+  justify-items: center;
   align-content: center;
   gap: 3rem;
 }
 
 .container {
-  justify-items: center;
+  justify-content: center;
 }
 
 .controls {
-  grid-template-columns: 1fr 1fr;
   gap: 1em;
 }
 
 button {
   --button-color: teal;
   font: inherit;
+  font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
   padding: 0.5em 1em;
-  border: 2px solid white;
+  width: 100%;
+  border: 0;
   cursor: pointer;
   background-color: var(--button-color);
   border-radius: 0.25rem;
@@ -45,21 +48,20 @@ button {
   }
 
   &:active {
-    border: 2px solid var(--button-color);
-    color: var(--button-color);
-    background-color: white;
+    opacity: 0.6;
   }
 }
 
 #analogClock {
-  --clockSize: 10rem;
+  --hand-width: 2%;
+  --clockSize: 6rem;
   --clockColor: lch(60% 120 60 / 1);
-  /* font-size: 1rem; */
+  --circleSize: calc(var(--hand-width) * 2);
   color: var(--clockColor);
   position: relative;
   height: var(--clockSize);
   width: var(--clockSize);
-  border: 0.15em solid var(--clockColor);
+  border: 0.15rem solid var(--clockColor);
   border-radius: 50%;
   background-size: 100%;
   cursor: pointer;
@@ -76,27 +78,25 @@ button {
 [class*="hand"] {
   border-top-left-radius: 50%;
   border-top-right-radius: 50%;
-  width: var(--h-hand-width);
-  height: var(--h-hand-height);
-  top: calc(50% - var(--h-hand-height));
-  left: calc(50% - var(--h-hand-width) / 2);
+  width: var(--hand-width);
+  height: var(--hand-height);
+  top: calc(50% - var(--hand-height));
+  left: calc(50% - var(--hand-width) / 2);
 }
 
 .hour-hand {
-  --h-hand-width: 2%;
-  --h-hand-height: 25%;
+  --hand-height: 25%;
   opacity: 0.9;
 }
 
 .minute-hand {
-  --h-hand-width: 2%;
-  --h-hand-height: 40%;
+  --hand-height: 40%;
   opacity: 0.6;
 }
 
 .second-hand {
-  --h-hand-width: 1%;
-  --h-hand-height: 40%;
+  --hand-width: 1%;
+  --hand-height: 40%;
   opacity: 0.3;
 
   &.hidden {
@@ -105,7 +105,6 @@ button {
 }
 
 .circle {
-  --circleSize: 4%;
   width: var(--circleSize);
   height: var(--circleSize);
   top: calc(50% - var(--circleSize) / 2);
@@ -118,12 +117,11 @@ button {
   justify-content: center;
   width: 0;
   height: 100%;
-  font-weight: 400;
-  font-size: 120%;
+  font-size: calc(var(--clockSize) * 0.125);
   transform-origin: center;
 
   --short-mark-width: .1em;
-  --short-mark-height: .25em;
+  --short-mark-height: .2em;
   --long-mark-width: .1em;
   --long-mark-height: .4em;
 
@@ -160,10 +158,10 @@ button {
   position: absolute;
 
   &:first-child {
-    top: 5%;
+    top: 2%;
   }
 
   &:last-child {
-    bottom: 5%;
+    bottom: 2%;
   }
 }
